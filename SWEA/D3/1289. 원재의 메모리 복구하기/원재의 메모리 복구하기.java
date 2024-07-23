@@ -14,8 +14,8 @@
 // AB = sc.nextLong();                         // long 변수 1개 입력받는 예제
 /////////////////////////////////////////////////////////////////////////////////////////////
 // 표준 출력 예제
-// int a = 0;                            
-// double b = 1.0;               
+// int a = 0;
+// double b = 1.0;
 // char g = 'b';
 // String var = "ABCDEFG";
 // long AB = 12345678901234567L;
@@ -57,39 +57,34 @@ class Solution
 
         for(int test_case = 1; test_case <= T; test_case++)
         {
+            StringBuilder sb = new StringBuilder();
 
-            String[] s  = sc.next().split("");
+            int count = 0;
 
-            arr = new int[s.length];
-            a = new int[s.length];
-            int score = 0;
+            String x = sc.next();
+            String[] s = x.split("");
+            int[] a = new int[x.length()];
+            int[] b = new int[x.length()];
 
-            for (int i = 0; i < s.length; i++) {
-                arr[i] = Integer.parseInt(s[i]);
+            for (int i = 0; i < x.length(); i++) {
                 a[i] = 0;
+                b[i] = Integer.parseInt(s[i]);
             }
 
-            for (int i = 0; i < s.length; i++) {
-                if (!(a[i]==arr[i])){
-                    change(i);
-                    score++;
+            for (int i = 0; i < x.length(); i++) {
+                if(a[i]!=b[i]){
+                    for (int j = i; j < x.length(); j++) {
+                        if(a[j]==1){
+                            a[j] = 0;
+                        } else if(a[j]==0) {
+                            a[j] = 1;
+                        }
+                    }
+                    count++;
                 }
             }
-
-            System.out.printf("#%d %d\n",test_case,score);
-
-
-
-        }
-    }
-    static int[] a;
-    static int[] arr;
-    public static void change(int x){
-        for (int i = x; i < a.length; i++) {
-            if (a[i] == 1)
-                a[i] = 0;
-            else
-                a[i] = 1;
+            sb.append("#").append(test_case).append(" ").append(count);
+            System.out.println(sb);
         }
     }
 }
