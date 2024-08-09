@@ -10,6 +10,7 @@ public class Main {
     static int count;
     static int[] ax = {0,0,1,-1};
     static int[] ay = {1,-1,0,0};
+    static Queue<int[]> q;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,6 +25,7 @@ public class Main {
             arr = new int[m][n];
             count = 0;
             visited = new boolean[m][n];
+            q = new LinkedList<>();
 
             for (int j = 0; j < k; j++) {
                 st = new StringTokenizer(br.readLine());
@@ -33,12 +35,15 @@ public class Main {
             for (int j = 0; j < m; j++) {
                 for (int l = 0; l < n; l++) {
                     if(arr[j][l] == 1 && !visited[j][l]){
-                        dfs(j,l);
+                        //dfs(j,l);
+                        bfs(j,l);
                         count ++;
                     }
                 }
             }
             System.out.println(count);
+
+
         }
     }
 
@@ -54,6 +59,22 @@ public class Main {
             }
         }
     }
+
+    static void bfs(int x, int y){
+        visited[x][y] = true;
+        q.offer(new int[]{x, y});
+        while (!q.isEmpty()){
+            int[] cur = q.poll();
+            for (int i = 0; i < 4; i++) {
+                int dx = cur[0]+ax[i];
+                int dy = cur[1]+ay[i];
+                if (check(dx, dy)){
+                    dfs(dx, dy);
+                }
+            }
+        }
+    }
+
 
     static boolean check(int x, int y){
         return x >= 0 && y >= 0 && x < m && y < n && !visited[x][y] && arr[x][y] == 1;
